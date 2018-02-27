@@ -8,7 +8,7 @@
       "type": "string"
     },
     "fallback": {
-      "type": "string"
+      "type": ["string", "function"]
     }
   },
   "additionalProperties": true

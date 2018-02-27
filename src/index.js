@@ -39,6 +39,10 @@ export default function loader(src) {
     )}`;
   }
 
+  if (typeof options.fallback === 'function') {
+    return options.fallback.call(this, src);
+  }
+
   const fallback = require(options.fallback ? options.fallback : 'file-loader');
 
   return fallback.call(this, src);

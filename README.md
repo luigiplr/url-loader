@@ -54,7 +54,7 @@ module.exports = {
 |:--:|:--:|:-----:|:----------|
 |**[`limit`](#limit)**|`{Number}`|`undefined`|Byte limit to inline files as Data URL|
 |**[`mimetype`](#mimetype)**|`{String}`|`extname`|Specify MIME type for the file (Otherwise it's inferred from the file extension)|
-|**[`fallback`](#fallback)**|`{String}`|`file-loader`|Specify `loader` for the file when file is greater than the limit (in bytes)|
+|**[`fallback`](#fallback)**|`{String|Function}`|`file-loader`|Specify `loader` or function that returns a `loader` for the file when file is greater than the limit (in bytes)|
 
 ### `limit`
 
@@ -95,6 +95,23 @@ Set the MIME type for the file. If unspecified the file extensions will be used 
   loader: 'url-loader',
   options: {
     fallback: 'responsive-loader'
+  }
+}
+```
+
+```js
+{
+  loader: 'url-loader',
+  options: {
+    fallback: function(...args) {]
+      // options for our fallback loader
+      this.query = {
+        adapter: require('responsive-loader/sharp'),
+        sizes: [300, 420, 768, 1024, 1920, 2560, 2560, 3840]
+      }
+
+      return require('responsive-loader').call(this, ...args)
+    }
   }
 }
 ```
